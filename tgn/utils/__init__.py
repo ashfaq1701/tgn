@@ -1,1 +1,1 @@
-from .utils import MLP, EarlyStopMonitor, RandEdgeSampler, get_neighbor_finder
+from .utils import MLP, MergeLayer, EarlyStopMonitor, RandEdgeSampler, get_neighbor_finder

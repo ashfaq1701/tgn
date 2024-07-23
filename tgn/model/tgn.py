@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from collections import defaultdict
 
-from tgn.utils.utils import MergeLayer
+from tgn.utils import MergeLayer
 from tgn.modules.memory import Memory
 from tgn.modules.message_aggregator import get_message_aggregator
 from tgn.modules.message_function import get_message_function

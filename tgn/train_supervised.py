@@ -1,3 +1,4 @@
+import os
 import math
 import logging
 import time
@@ -9,6 +10,8 @@ from pathlib import Path
 
 import torch
 import numpy as np
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from tgn.model import TGN
 from tgn.utils import EarlyStopMonitor, get_neighbor_finder, MLP
@@ -92,12 +95,12 @@ USE_MEMORY = args.use_memory
 MESSAGE_DIM = args.message_dim
 MEMORY_DIM = args.memory_dim
 
-Path("../saved_models/").mkdir(parents=True, exist_ok=True)
-Path("../saved_checkpoints/").mkdir(parents=True, exist_ok=True)
-MODEL_SAVE_PATH = f'./saved_models/{args.prefix}-{args.data}' + '\
+Path("saved_models/").mkdir(parents=True, exist_ok=True)
+Path("saved_checkpoints/").mkdir(parents=True, exist_ok=True)
+MODEL_SAVE_PATH = f'saved_models/{args.prefix}-{args.data}' + '\
   node-classification.pth'
 get_checkpoint_path = lambda \
-    epoch: f'./saved_checkpoints/{args.prefix}-{args.data}-{epoch}' + '\
+    epoch: f'saved_checkpoints/{args.prefix}-{args.data}-{epoch}' + '\
   node-classification.pth'
 
 ### set up logger
@@ -134,7 +137,7 @@ for i in range(args.n_runs):
   results_path = "results/{}_node_classification_{}.pkl".format(args.prefix,
                                                                 i) if i > 0 else "results/{}_node_classification.pkl".format(
     args.prefix)
-  Path("../results/").mkdir(parents=True, exist_ok=True)
+  Path("results/").mkdir(parents=True, exist_ok=True)
 
   # Initialize Model
   tgn = TGN(neighbor_finder=train_ngh_finder, node_features=node_features,
@@ -160,7 +163,7 @@ for i in range(args.n_runs):
   logger.debug('Num of batches per epoch: {}'.format(num_batch))
 
   logger.info('Loading saved TGN model')
-  model_path = f'./saved_models/{args.prefix}-{DATA}.pth'
+  model_path = f'saved_models/{args.prefix}-{DATA}.pth'
   tgn.load_state_dict(torch.load(model_path))
   tgn.eval()
   logger.info('TGN models loaded')

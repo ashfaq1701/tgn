@@ -42,8 +42,8 @@ Download the sample datasets (eg. wikipedia and reddit) from
 We use the dense `npy` format to save the features in binary format. If edge features or nodes 
 features are absent, they will be replaced by a vector of zeros. 
 ```{bash}
-python utils/preprocess_data.py --data wikipedia --bipartite
-python utils/preprocess_data.py --data reddit --bipartite
+python tgn/utils/preprocess_data.py --data wikipedia --bipartite
+python tgn/utils/preprocess_data.py --data reddit --bipartite
 ```
 
 
@@ -53,20 +53,20 @@ python utils/preprocess_data.py --data reddit --bipartite
 Self-supervised learning using the link prediction task:
 ```{bash}
 # TGN-attn: Supervised learning on the wikipedia dataset
-python train_self_supervised.py --use_memory --prefix tgn-attn --n_runs 10
+python tgn/train_self_supervised.py --use_memory --prefix tgn-attn --n_runs 10
 
 # TGN-attn-reddit: Supervised learning on the reddit dataset
-python train_self_supervised.py -d reddit --use_memory --prefix tgn-attn-reddit --n_runs 10
+python tgn/train_self_supervised.py -d reddit --use_memory --prefix tgn-attn-reddit --n_runs 10
 ```
 
 Supervised learning on dynamic node classification (this requires a trained model from 
 the self-supervised task, by eg. running the commands above):
 ```{bash}
 # TGN-attn: self-supervised learning on the wikipedia dataset
-python train_supervised.py --use_memory --prefix tgn-attn --n_runs 10
+python tgn/train_supervised.py --use_memory --prefix tgn-attn --n_runs 10
 
 # TGN-attn-reddit: self-supervised learning on the reddit dataset
-python train_supervised.py -d reddit --use_memory --prefix tgn-attn-reddit --n_runs 10
+python tgn/train_supervised.py -d reddit --use_memory --prefix tgn-attn-reddit --n_runs 10
 ```
 
 ### Baselines
@@ -75,37 +75,37 @@ python train_supervised.py -d reddit --use_memory --prefix tgn-attn-reddit --n_r
 ### Wikipedia Self-supervised
 
 # Jodie
-python train_self_supervised.py --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn --n_runs 10
+python tgn/train_self_supervised.py --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn --n_runs 10
 
 # DyRep
-python train_self_supervised.py --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn --n_runs 10
+python tgn/train_self_supervised.py --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn --n_runs 10
 
 
 ### Reddit Self-supervised
 
 # Jodie
-python train_self_supervised.py -d reddit --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn_reddit --n_runs 10
+python tgn/train_self_supervised.py -d reddit --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn_reddit --n_runs 10
 
 # DyRep
-python train_self_supervised.py -d reddit --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn_reddit --n_runs 10
+python tgn/train_self_supervised.py -d reddit --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn_reddit --n_runs 10
 
 
 ### Wikipedia Supervised
 
 # Jodie
-python train_supervised.py --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn --n_runs 10
+python tgn/train_supervised.py --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn --n_runs 10
 
 # DyRep
-python train_supervised.py --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn --n_runs 10
+python tgn/train_supervised.py --use_memory --memory_updater rnn --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn --n_runs 10
 
 
 ### Reddit Supervised
 
 # Jodie
-python train_supervised.py -d reddit --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn_reddit --n_runs 10
+python tgn/train_supervised.py -d reddit --use_memory --memory_updater rnn --embedding_module time --prefix jodie_rnn_reddit --n_runs 10
 
 # DyRep
-python train_supervised.py -d reddit --use_memory --memory_updater rnn  --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn_reddit --n_runs 10
+python tgn/train_supervised.py -d reddit --use_memory --memory_updater rnn  --dyrep --use_destination_embedding_in_message --prefix dyrep_rnn_reddit --n_runs 10
 ```
 
 
@@ -113,22 +113,22 @@ python train_supervised.py -d reddit --use_memory --memory_updater rnn  --dyrep 
 Commands to replicate all results in the ablation study over different modules:
 ```{bash}
 # TGN-2l
-python train_self_supervised.py --use_memory --n_layer 2 --prefix tgn-2l --n_runs 10 
+python tgn/train_self_supervised.py --use_memory --n_layer 2 --prefix tgn-2l --n_runs 10 
 
 # TGN-no-mem
-python train_self_supervised.py --prefix tgn-no-mem --n_runs 10 
+python tgn/train_self_supervised.py --prefix tgn-no-mem --n_runs 10 
 
 # TGN-time
-python train_self_supervised.py --use_memory --embedding_module time --prefix tgn-time --n_runs 10 
+python tgn/train_self_supervised.py --use_memory --embedding_module time --prefix tgn-time --n_runs 10 
 
 # TGN-id
-python train_self_supervised.py --use_memory --embedding_module identity --prefix tgn-id --n_runs 10
+python tgn/train_self_supervised.py --use_memory --embedding_module identity --prefix tgn-id --n_runs 10
 
 # TGN-sum
-python train_self_supervised.py --use_memory --embedding_module graph_sum --prefix tgn-sum --n_runs 10
+python tgn/train_self_supervised.py --use_memory --embedding_module graph_sum --prefix tgn-sum --n_runs 10
 
 # TGN-mean
-python train_self_supervised.py --use_memory --aggregator mean --prefix tgn-mean --n_runs 10
+python tgn/train_self_supervised.py --use_memory --aggregator mean --prefix tgn-mean --n_runs 10
 ```
 
 
