@@ -8,10 +8,10 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-from evaluation.evaluation import eval_edge_prediction
-from model.tgn import TGN
-from utils.utils import EarlyStopMonitor, RandEdgeSampler, get_neighbor_finder
-from utils.data_processing import get_data, compute_time_statistics
+from tgn.evaluation.evaluation import eval_edge_prediction
+from tgn.model import TGN
+from tgn.utils import EarlyStopMonitor, RandEdgeSampler, get_neighbor_finder
+from tgn.utils.data_processing import get_data, compute_time_statistics
 
 torch.manual_seed(0)
 np.random.seed(0)
@@ -86,8 +86,8 @@ USE_MEMORY = args.use_memory
 MESSAGE_DIM = args.message_dim
 MEMORY_DIM = args.memory_dim
 
-Path("./saved_models/").mkdir(parents=True, exist_ok=True)
-Path("./saved_checkpoints/").mkdir(parents=True, exist_ok=True)
+Path("../saved_models/").mkdir(parents=True, exist_ok=True)
+Path("../saved_checkpoints/").mkdir(parents=True, exist_ok=True)
 MODEL_SAVE_PATH = f'./saved_models/{args.prefix}-{args.data}.pth'
 get_checkpoint_path = lambda \
     epoch: f'./saved_checkpoints/{args.prefix}-{args.data}-{epoch}.pth'
@@ -96,7 +96,7 @@ get_checkpoint_path = lambda \
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
-Path("log/").mkdir(parents=True, exist_ok=True)
+Path("../log/").mkdir(parents=True, exist_ok=True)
 fh = logging.FileHandler('log/{}.log'.format(str(time.time())))
 fh.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
@@ -141,7 +141,7 @@ mean_time_shift_src, std_time_shift_src, mean_time_shift_dst, std_time_shift_dst
 
 for i in range(args.n_runs):
   results_path = "results/{}_{}.pkl".format(args.prefix, i) if i > 0 else "results/{}.pkl".format(args.prefix)
-  Path("results/").mkdir(parents=True, exist_ok=True)
+  Path("../results/").mkdir(parents=True, exist_ok=True)
 
   # Initialize Model
   tgn = TGN(neighbor_finder=train_ngh_finder, node_features=node_features,

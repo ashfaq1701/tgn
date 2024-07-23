@@ -10,10 +10,10 @@ from pathlib import Path
 import torch
 import numpy as np
 
-from model.tgn import TGN
-from utils.utils import EarlyStopMonitor, get_neighbor_finder, MLP
-from utils.data_processing import compute_time_statistics, get_data_node_classification
-from evaluation.evaluation import eval_node_classification
+from tgn.model import TGN
+from tgn.utils import EarlyStopMonitor, get_neighbor_finder, MLP
+from tgn.utils.data_processing import compute_time_statistics, get_data_node_classification
+from tgn.evaluation.evaluation import eval_node_classification
 
 random.seed(0)
 np.random.seed(0)
@@ -92,8 +92,8 @@ USE_MEMORY = args.use_memory
 MESSAGE_DIM = args.message_dim
 MEMORY_DIM = args.memory_dim
 
-Path("./saved_models/").mkdir(parents=True, exist_ok=True)
-Path("./saved_checkpoints/").mkdir(parents=True, exist_ok=True)
+Path("../saved_models/").mkdir(parents=True, exist_ok=True)
+Path("../saved_checkpoints/").mkdir(parents=True, exist_ok=True)
 MODEL_SAVE_PATH = f'./saved_models/{args.prefix}-{args.data}' + '\
   node-classification.pth'
 get_checkpoint_path = lambda \
@@ -134,7 +134,7 @@ for i in range(args.n_runs):
   results_path = "results/{}_node_classification_{}.pkl".format(args.prefix,
                                                                 i) if i > 0 else "results/{}_node_classification.pkl".format(
     args.prefix)
-  Path("results/").mkdir(parents=True, exist_ok=True)
+  Path("../results/").mkdir(parents=True, exist_ok=True)
 
   # Initialize Model
   tgn = TGN(neighbor_finder=train_ngh_finder, node_features=node_features,
